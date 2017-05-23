@@ -9,6 +9,7 @@ echo "Set user password:"
 passwd $userName
 
 # Header files and scripts for building modules for Linux kernel
+pacman-optimize
 pacman -Syyu
 pacman -S linux-headers
 
@@ -69,9 +70,13 @@ pacman -S --noconfirm ttf-dejavu
 # Install desktop & window manager
 pacman -S --noconfirm i3-wm i3status i3lock dmenu
 
+# Install GTK-Theme and Icons
+pacman -S --noconfirm arc-gtk-theme arc-icon-theme
+
 # Install graphical programs
 pacman -S --noconfirm rxvt-unicode
 pacman -S --noconfirm zenity
+pacman -S --noconfirm lxappearance
 pacman -S --noconfirm pavucontrol
 pacman -S --noconfirm gnome-system-monitor
 pacman -S --noconfirm lxrandr
@@ -81,9 +86,9 @@ pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
 pacman -S --noconfirm geany
-pacman -S --noconfirm eclipse-java
+pacman -S --noconfirm eclipse-java gradle
 pacman -S --noconfirm gimp
-pacman -S --noconfirm gparted dosfstools ntfs-3g
+pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2
 pacman -S --noconfirm file-roller unrar p7zip lrzip
 pacman -S --noconfirm gutenprint ghostscript gsfonts
@@ -119,6 +124,7 @@ cp -R ./config/home/. /home/$userName/
 # Change premissions
 chown $userName:users -R /home/$userName/
 chmod -R 700 /home/$userName/.bin/
+chmod 700 /home/$userName/install-Sublime-text.sh
 
 # Remove installation files
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

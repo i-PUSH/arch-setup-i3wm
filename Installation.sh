@@ -31,10 +31,14 @@ pacman-key --populate archlinux
 # Create a new initial RAM disk
 mkinitcpio -p linux
 
+# Install microcode for Intel processors
+pacman -S intel-ucode
+
 # Install and configure the Bootloader
 bootctl install
 echo "title Arch Linux" > /boot/loader/entries/arch.conf
 echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
 echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
 echo "options root=/dev/sda2 rw" >> /boot/loader/entries/arch.conf
 echo "default arch" > /boot/loader/loader.conf

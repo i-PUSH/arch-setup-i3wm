@@ -6,8 +6,8 @@ URxvt*depth: 24
 URxvt*borderless: 1
 URxvt*scrollBar: false
 URxvt*saveLines: 2000
-URxvt.transparent:   true
-URxvt.shading:       20
+URxvt.transparent: true
+URxvt.shading: 20
 
 ! disable the ctrl+shift feature
 URxvt.iso14755: false

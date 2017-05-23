@@ -54,6 +54,7 @@ alias vim='vim -u NONE'
 # Functions
 cdd() { cd "$@" && ls -all; }
 fehbg() { feh --bg-fill "$(xsel -b)"; }
+diffDirs() { diff -r -q {$1,$2} -x "$3" -x "$4" -x "$5" -x "$6"; }
 extract () {
 if [ -f $1 ] ; then
   case $1 in
