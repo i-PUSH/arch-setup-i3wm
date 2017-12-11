@@ -3,15 +3,9 @@ general {
         interval = 5
 }
 
-order += "wireless _first_"
 order += "volume master"
 order += "battery 0"
 order += "tztime local"
-
-wireless _first_ {
-        format_up = "☻"
-        format_down = "☻"
-}
 
 volume master {
         format = "♪ %volume"

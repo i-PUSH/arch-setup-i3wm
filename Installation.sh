@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Installation
+echo "Installation"
 
 # Set the hostname
 read -p "Set hostname: " hostName
@@ -28,6 +28,9 @@ rm -Rf /etc/pacman.d/gnupg
 pacman-key --init
 pacman-key --populate archlinux
 
+# Configure mkinitcpio
+sed -i '/^HOOKS=/s/block/block keymap encrypt/' /etc/mkinitcpio.conf
+
 # Create a new initial RAM disk
 mkinitcpio -p linux
 
@@ -36,12 +39,14 @@ pacman -S intel-ucode
 
 # Install and configure the Bootloader
 bootctl install
+ROOT="$(find -L /dev/disk/by-partuuid -samefile /dev/sda3)"
 echo "title Arch Linux" > /boot/loader/entries/arch.conf
 echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
 echo "initrd /intel-ucode.img" >> /boot/loader/entries/arch.conf
 echo "initrd /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-echo "options root=/dev/sda2 rw" >> /boot/loader/entries/arch.conf
+echo "options cryptdevice=PARTUUID=$ROOT:root root=/dev/mapper/root quite rw" >> /boot/loader/entries/arch.conf
 echo "default arch" > /boot/loader/loader.conf
+echo "editor 0" >> /boot/loader/loader.conf
 
-# Exit the chroot environment and reboot (optionaly add: umount -R /mnt)
-echo "1. exit | 2. umount -R /mnt | 3. reboot | 4. Execute Post-Installation.sh"
+# Run last script
+./Post-Installation.sh

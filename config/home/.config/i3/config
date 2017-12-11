@@ -188,12 +188,8 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 # Make Screenshot
 bindsym --release Print exec scrot ~/%Y-%m-%d-%T-screenshot.png
 bindsym --release Shift+Print exec scrot -s ~/%Y-%m-%d-%T-screenshot.png
-# Disable DPMS and screen blanking
-bindsym $mod+F5 exec xset -dpms s off
-# Enable DPMS and screen blanking
-bindsym $mod+Shift+F5 exec xset +dpms s on
 # Shutdown or Reboot PC
-bindsym $mod+q exec ~/.bin/ShutdownRebootLock.sh
+bindsym $mod+q exec ~/.bin/SystemControl.sh
 
 # Autostarted applications
 exec --no-startup-id nm-applet

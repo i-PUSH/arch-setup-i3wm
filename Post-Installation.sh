@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Post-Installation
+echo "Post-Installation"
 
 # Create user and set password
 read -p "Set user name:" userName
-useradd -m -g users -G wheel,users,storage,power,audio,video -s /bin/bash $userName
+useradd -m -G wheel,storage,audio,video -s /bin/bash $userName
 echo "Set user password:"
 passwd $userName
 
@@ -21,6 +21,7 @@ systemctl enable acpid
 systemctl enable ntpd
 systemctl enable cronie
 systemctl enable avahi-daemon
+systemctl enable fstrim.timer
 
 # Enable TLP
 systemctl enable tlp.service
@@ -78,30 +79,30 @@ pacman -S --noconfirm rxvt-unicode
 pacman -S --noconfirm zenity
 pacman -S --noconfirm lxappearance
 pacman -S --noconfirm pavucontrol
-pacman -S --noconfirm gnome-system-monitor
+#pacman -S --noconfirm gnome-system-monitor
 pacman -S --noconfirm lxrandr
-pacman -S --noconfirm firefox
-pacman -S --noconfirm gnome-calculator
-pacman -S --noconfirm libreoffice-fresh hunspell-de
+#pacman -S --noconfirm firefox
+#pacman -S --noconfirm gnome-calculator
+#pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
-pacman -S --noconfirm smplayer
-pacman -S --noconfirm geany
-pacman -S --noconfirm eclipse-java gradle
-pacman -S --noconfirm gimp
+#pacman -S --noconfirm smplayer
+#pacman -S --noconfirm geany
+#pacman -S --noconfirm eclipse-java gradle
+#pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2
 pacman -S --noconfirm file-roller unrar p7zip lrzip
 pacman -S --noconfirm gutenprint ghostscript gsfonts
 pacman -S --noconfirm system-config-printer gtk3-print-backends simple-scan
 pacman -S --noconfirm gpicview
-pacman -S --noconfirm transmission-gtk
-pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
+#pacman -S --noconfirm transmission-gtk
+#pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
+
+# Install Sublime text editor
+cd ./config/sublime-text/ && makepkg -si
 
 # Add User-"user" to VirtualBox-Group
-gpasswd -a $userName vboxusers
-
-# java
-echo "_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'" >> /etc/environment
+#gpasswd -a $userName vboxusers
 
 # Configure sudo
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
@@ -122,13 +123,9 @@ cp ./config/50-synaptics.conf /etc/X11/xorg.conf.d/
 cp -R ./config/home/. /home/$userName/
 
 # Change premissions
-chown $userName:users -R /home/$userName/
+chown $userName:$userName -R /home/$userName/
 chmod -R 700 /home/$userName/.bin/
-chmod 700 /home/$userName/install-Sublime-text.sh
 
 # Remove installation files
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 rm -R $DIR
-
-# Finish
-echo "Installation finished!!!"

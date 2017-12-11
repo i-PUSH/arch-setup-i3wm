@@ -63,7 +63,7 @@ for i in "${@}"; do [[ "$i" =~ "http" ]] && URL=( "$i" ); done
 for i in "${@}"; do [[ "$i" == "-d" ]] && DOWNLOAD="-d"; done
 for i in "${@}"; do [[ "$i" == "-nv" ]] && NO_VIDEO="-nv"; done
 
-[[ "$URL" =~ "youtube" ]] && playYT "$URL" $DOWNLOAD $NO_VIDEO
+[[ "$URL" =~ ("youtube.com"|"youtu.be") ]] && playYT "$URL" $DOWNLOAD $NO_VIDEO
 [[ ! -z "$DOWNLOAD" ]] && $TERMINAL -e youtube-dl "$URL" && exit
 [[ ! -z "$NO_VIDEO" ]] && $TERMINAL -e mpv --no-video $URL || mpv "$URL"
 
