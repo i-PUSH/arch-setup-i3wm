@@ -30,7 +30,7 @@ mount /dev/mapper/root /mnt
 
 # Select the mirrors
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-cat /etc/pacman.d/mirrorlist | sed -n "/## Germany/,/##/p" | head -n-2 | grep -v "http:" | sed 's/^#Server/Server/' > /etc/pacman.d/mirrorlist.tmp
+wget -O - "https://www.archlinux.org/mirrorlist/?country=DE&protocol=https&ip_version=4&use_mirror_status=on" | sed 's/^#Server/Server/' > /etc/pacman.d/mirrorlist.tmp
 rankmirrors -n 10 /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 rm /etc/pacman.d/mirrorlist.tmp
 
