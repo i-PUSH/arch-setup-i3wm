@@ -1,5 +1,6 @@
 #!/bin/bash
 
+{
 echo "Pre-Installation"
 
 # Update the system clock
@@ -35,11 +36,11 @@ rankmirrors -n 10 /etc/pacman.d/mirrorlist.tmp > /etc/pacman.d/mirrorlist
 rm /etc/pacman.d/mirrorlist.tmp
 
 # Install the base packages
-pacstrap -i /mnt base base-devel
+pacstrap /mnt base base-devel
 
 # Configure crypttab
-SWAP="$(find -L /dev/disk/by-partuuid -samefile /dev/sda2)"
-echo "swap $SWAP /dev/urandom swap,noearly,cipher=aes-xts-plain64,hash=sha512,size=512" >> /mnt/etc/crypttab
+SWAP="$(find -L /dev/disk/by-partuuid -samefile /dev/sda2 | cut -d/ -f5)"
+echo "swap PARTUUID=$SWAP /dev/urandom swap,noearly,cipher=aes-xts-plain64,hash=sha512,size=512" >> /mnt/etc/crypttab
 
 # Configure fstab
 SDA1="$(lsblk -rno UUID /dev/sda1)"
@@ -55,9 +56,16 @@ EOF
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cp -R $DIR /mnt/i-PUSH-arch-setup-i3wm
 
-# Change root into the new system and start the second script
+# Change root into the new system and run Installation.sh
 arch-chroot /mnt /i-PUSH-arch-setup-i3wm/Installation.sh
 
-# Finish
+# Pipe all output into log file
+} |& tee -a /root/Arch-Installation.log
+mv /root/Arch-Installation.log /mnt/home/$(ls /mnt/home/)/
+
+# Reboot because systemctl & localectl are not available while chroot
 umount -R /mnt
-echo "Installation finished!!!"
+cryptsetup luksClose root
+echo "Reboot, login as root and run: /i-PUSH-arch-setup-i3wm/Final-Installation.sh"
+read -p "Press enter to reboot..."
+reboot

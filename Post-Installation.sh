@@ -8,36 +8,16 @@ useradd -m -G wheel,storage,audio,video -s /bin/bash $userName
 echo "Set user password:"
 passwd $userName
 
-# Header files and scripts for building modules for Linux kernel
-pacman-optimize
-pacman -Syyu
-pacman -S linux-headers
+# Install header files and scripts for building modules for Linux kernel
+pacman -S --noconfirm linux-headers
 
 # Install important services
 pacman -S --noconfirm acpid ntp cronie avahi dbus cups ufw tlp
-
-# Enable important services
-systemctl enable acpid
-systemctl enable ntpd
-systemctl enable cronie
-systemctl enable avahi-daemon
-systemctl enable fstrim.timer
-
-# Enable TLP
-systemctl enable tlp.service
-systemctl enable tlp-sleep.service
-systemctl disable systemd-rfkill.service
-
-# Enable UFW
-systemctl enable ufw
-ufw default deny
-ufw enable
 
 # Configure the network
 pacman -S --noconfirm dialog dhclient 
 pacman -S --noconfirm networkmanager network-manager-applet
 pacman -S --noconfirm gnome-keyring libsecret seahorse
-systemctl enable NetworkManager.service
 
 # Install command line and ncurses programs
 pacman -S --noconfirm sudo
@@ -47,18 +27,20 @@ pacman -S --noconfirm ranger w3m
 pacman -S --noconfirm pulseaudio pulseaudio-alsa
 pacman -S --noconfirm htop
 pacman -S --noconfirm screen
-pacman -S --noconfirm wget curl axel youtube-dl
+pacman -S --noconfirm youtube-dl
+pacman -S --noconfirm wget curl axel
+pacman -S --noconfirm rsync
 pacman -S --noconfirm scrot
 pacman -S --noconfirm xdotool
 pacman -S --noconfirm xclip xsel
 pacman -S --noconfirm lshw
 pacman -S --noconfirm acpi
 pacman -S --noconfirm nmap
-pacman -S --noconfirm openssh
 pacman -S --noconfirm vim
 pacman -S --noconfirm ffmpeg
 pacman -S --noconfirm git
 pacman -S --noconfirm feh
+pacman -S --noconfirm openssh
 pacman -S --noconfirm openvpn easy-rsa
 
 # Install xorg and graphics
@@ -87,7 +69,7 @@ pacman -S --noconfirm lxrandr
 pacman -S --noconfirm evince
 #pacman -S --noconfirm smplayer
 #pacman -S --noconfirm geany
-#pacman -S --noconfirm eclipse-java gradle
+#pacman -S --noconfirm intellij-idea-community-edition gradle
 #pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2
@@ -98,8 +80,8 @@ pacman -S --noconfirm gpicview
 #pacman -S --noconfirm transmission-gtk
 #pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
 
-# Install Sublime text editor
-cd ./config/sublime-text/ && makepkg -si
+# Clean up and optimize pacman
+pacman -Sc --noconfirm && pacman-optimize
 
 # Add User-"user" to VirtualBox-Group
 #gpasswd -a $userName vboxusers
@@ -113,19 +95,17 @@ echo "$userName ALL = NOPASSWD: /usr/bin/shutdown" >> /etc/sudoers
 # Add Cron job
 { crontab -l -u $userName; echo "*/5 * * * * env DISPLAY=:0  /home/$userName/.bin/BatteryWarning.sh"; } | crontab -u $userName -
 
-# Configure Keyboardlayout
-localectl set-x11-keymap de pc105 nodeadkeys
-
 # Configure synaptics touchpad
-cp ./config/50-synaptics.conf /etc/X11/xorg.conf.d/
+cp /i-PUSH-arch-setup-i3wm/config/50-synaptics.conf /etc/X11/xorg.conf.d/
 
 # Copy all files
-cp -R ./config/home/. /home/$userName/
+cp -R /i-PUSH-arch-setup-i3wm/config/home/. /home/$userName/
+cp -R /i-PUSH-arch-setup-i3wm/config/sublime-text/ /home/$userName/
 
 # Change premissions
-chown $userName:$userName -R /home/$userName/
+chown -R $userName:$userName /home/$userName/
 chmod -R 700 /home/$userName/.bin/
 
-# Remove installation files
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-rm -R $DIR
+# Install Sublime text editor
+su - $userName -c 'cd /home/$1/sublime-text/ && makepkg -si' -- -- $userName
+rm -R /home/$userName/sublime-text/
