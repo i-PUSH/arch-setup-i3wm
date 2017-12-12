@@ -25,8 +25,8 @@ mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/mapper/root
 
 # Mount the partitions
-mkdir -p /mnt/boot && mount /dev/sda1 /mnt/boot
 mount /dev/mapper/root /mnt
+mkdir /mnt/boot && mount /dev/sda1 /mnt/boot
 
 # Select the mirrors
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
