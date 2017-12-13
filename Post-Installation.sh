@@ -61,30 +61,27 @@ pacman -S --noconfirm rxvt-unicode
 pacman -S --noconfirm zenity
 pacman -S --noconfirm lxappearance
 pacman -S --noconfirm pavucontrol
-#pacman -S --noconfirm gnome-system-monitor
+pacman -S --noconfirm gnome-system-monitor
 pacman -S --noconfirm lxrandr
-#pacman -S --noconfirm firefox
-#pacman -S --noconfirm gnome-calculator
-#pacman -S --noconfirm libreoffice-fresh hunspell-de
+pacman -S --noconfirm firefox
+pacman -S --noconfirm gnome-calculator
+pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
-#pacman -S --noconfirm smplayer
-#pacman -S --noconfirm geany
-#pacman -S --noconfirm intellij-idea-community-edition gradle
-#pacman -S --noconfirm gimp
+pacman -S --noconfirm smplayer
+pacman -S --noconfirm geany
+pacman -S --noconfirm intellij-idea-community-edition gradle
+pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2
 pacman -S --noconfirm file-roller unrar p7zip lrzip
 pacman -S --noconfirm gutenprint ghostscript gsfonts
 pacman -S --noconfirm system-config-printer gtk3-print-backends simple-scan
 pacman -S --noconfirm gpicview
-#pacman -S --noconfirm transmission-gtk
-#pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
-
-# Clean up and optimize pacman
-pacman -Sc --noconfirm && pacman-optimize
+pacman -S --noconfirm transmission-gtk
+pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
 
 # Add User-"user" to VirtualBox-Group
-#gpasswd -a $userName vboxusers
+gpasswd -a $userName vboxusers
 
 # Configure sudo
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
@@ -107,5 +104,9 @@ chown -R $userName:$userName /home/$userName/
 chmod -R 700 /home/$userName/.bin/
 
 # Install Sublime text editor
-su - $userName -c 'cd /home/$1/sublime-text/ && makepkg -si' -- -- $userName
+su - $userName -c 'cd /home/$1/sublime-text/ && makepkg -s' -- -- $userName
+pacman -U --noconfirm /home/$userName/sublime-text/sublime*.pkg.tar.xz
 rm -R /home/$userName/sublime-text/
+
+# Clean up and optimize pacman
+pacman -Sc --noconfirm && pacman-optimize
