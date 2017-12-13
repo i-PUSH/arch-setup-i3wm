@@ -3,7 +3,7 @@
 echo "Post-Installation"
 
 # Create user and set password
-read -p "Set user name:" userName
+read -p "Set user name: " userName
 useradd -m -G wheel,storage,audio,video -s /bin/bash $userName
 echo "Set user password:"
 passwd $userName
@@ -68,7 +68,6 @@ pacman -S --noconfirm gnome-calculator
 pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
-pacman -S --noconfirm geany
 pacman -S --noconfirm intellij-idea-community-edition gradle
 pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
