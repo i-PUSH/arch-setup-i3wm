@@ -8,7 +8,7 @@ timedatectl set-ntp true
 
 # Partition the disks
 parted /dev/sda mklabel gpt
-echo "mkpart ESP fat32 1MiB 200MiB
+echo "mkpart ESP fat32 0% 200MiB
 set 1 boot on
 mkpart primary linux-swap 200MiB 4.2GiB
 mkpart primary ext4 4.2GiB 100%
