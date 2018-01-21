@@ -1,0 +1,7 @@
+! Switch left Alt key with left Super key (Windows button)
+remove mod1 = Alt_L
+remove mod4 = Super_L
+keysym Alt_L = Super_L
+keysym Super_L = Alt_L
+add mod1 = Alt_L
+add mod4 = Super_L

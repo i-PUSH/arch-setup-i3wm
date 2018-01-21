@@ -49,7 +49,7 @@ cat << EOF > /mnt/etc/fstab
 UUID=${SDA1} /boot vfat defaults,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2
 /dev/mapper/swap none swap defaults 0 0
 /dev/mapper/root / ext4 defaults,noatime,data=ordered 0 1
-tmpfs /tmp tmpfs size=4G,nr_inodes=20k 0 0
+tmpfs /tmp tmpfs size=4G 0 0
 EOF
 
 # Copy the setup folder to the new system

@@ -8,11 +8,14 @@ useradd -m -G wheel,storage,audio,video -s /bin/bash $userName
 echo "Set user password:"
 passwd $userName
 
+# Install LTS kernel
+pacman -S --noconfirm linux-lts
+
 # Install header files and scripts for building modules for Linux kernel
-pacman -S --noconfirm linux-headers
+pacman -S --noconfirm linux-headers linux-lts-headers
 
 # Install important services
-pacman -S --noconfirm acpid ntp cronie avahi dbus cups ufw tlp
+pacman -S --noconfirm acpid ntp cronie avahi nss-mdns dbus cups ufw tlp
 
 # Configure the network
 pacman -S --noconfirm dialog dhclient 
@@ -44,11 +47,11 @@ pacman -S --noconfirm openssh
 pacman -S --noconfirm openvpn easy-rsa
 
 # Install xorg and graphics
-pacman -S --noconfirm xorg xorg-xinit mesa
+pacman -S --noconfirm xorg xorg-xinit libva-intel-driver mesa
 pacman -S --noconfirm xf86-video-intel xf86-input-synaptics
 
 # Install fonts
-pacman -S --noconfirm ttf-dejavu
+pacman -S --noconfirm ttf-droid ttf-dejavu
 
 # Install desktop & window manager
 pacman -S --noconfirm i3-wm i3status i3lock dmenu
@@ -68,19 +71,28 @@ pacman -S --noconfirm gnome-calculator
 pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
-pacman -S --noconfirm intellij-idea-community-edition gradle
+pacman -S --noconfirm jdk8-openjdk gradle
+pacman -S --noconfirm intellij-idea-community-edition
 pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
-pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2
+pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2 libmtp mtpfs gvfs-mtp
 pacman -S --noconfirm file-roller unrar p7zip lrzip
 pacman -S --noconfirm gutenprint ghostscript gsfonts
 pacman -S --noconfirm system-config-printer gtk3-print-backends simple-scan
 pacman -S --noconfirm gpicview
 pacman -S --noconfirm transmission-gtk
-pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
+pacman -S --noconfirm qemu
+# pacman -S --noconfirm docker
+# pacman -S --noconfirm virtualbox virtualbox-host-modules-arch virtualbox-guest-iso
 
-# Add User-"user" to VirtualBox-Group
-gpasswd -a $userName vboxusers
+# Add user to docker group
+# gpasswd -a $userName docker
+
+# Add user to VirtualBox group
+# gpasswd -a $userName vboxusers
+
+# Avahi provides local hostname resolution using a "hostname.local" naming scheme
+sed -i '/hosts:/s/mymachines/mymachines mdns_minimal [NOTFOUND=return]/' /etc/nsswitch.conf
 
 # Configure sudo
 sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
@@ -94,18 +106,28 @@ echo "$userName ALL = NOPASSWD: /usr/bin/shutdown" >> /etc/sudoers
 # Configure synaptics touchpad
 cp /i-PUSH-arch-setup-i3wm/config/50-synaptics.conf /etc/X11/xorg.conf.d/
 
-# Copy all files
+# Copy all home folder files
 cp -R /i-PUSH-arch-setup-i3wm/config/home/. /home/$userName/
-cp -R /i-PUSH-arch-setup-i3wm/config/sublime-text/ /home/$userName/
+
+# Compile the rsync extension
+g++ /home/$userName/.bin/Rsync.cpp -o /home/$userName/.bin/Rsync
+rm /home/$userName/.bin/Rsync.cpp
 
 # Change premissions
 chown -R $userName:$userName /home/$userName/
 chmod -R 700 /home/$userName/.bin/
 
+# Install Visual Studio code
+wget "https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz" -O - | tar xz -C /tmp
+su - $userName -c 'cd /tmp/visual-studio-code-bin && makepkg -s'
+pacman -U --noconfirm /tmp/visual-studio-code-bin/visual-studio-code-bin*.pkg.tar.xz
+rm -R /tmp/visual-studio-code-bin
+
 # Install Sublime text editor
-su - $userName -c 'cd /home/$1/sublime-text/ && makepkg -s' -- -- $userName
-pacman -U --noconfirm /home/$userName/sublime-text/sublime*.pkg.tar.xz
-rm -R /home/$userName/sublime-text/
+# wget "https://aur.archlinux.org/cgit/aur.git/snapshot/sublime-text-dev.tar.gz" -O - | tar xz -C /tmp
+# su - $userName -c 'cd /tmp/sublime-text-dev && makepkg -s'
+# pacman -U --noconfirm /tmp/sublime-text-dev/sublime-text-dev*.pkg.tar.xz
+# rm -R /tmp/sublime-text-dev
 
 # Clean up and optimize pacman
 pacman -Sc --noconfirm && pacman-optimize

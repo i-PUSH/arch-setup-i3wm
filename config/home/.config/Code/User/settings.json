@@ -1,0 +1,12 @@
+{
+    "workbench.colorTheme": "Monokai",
+    "window.zoomLevel": 0,
+    "window.menuBarVisibility": "toggle",
+    "update.channel": "none",
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": true,
+    "explorer.confirmDelete": false
+}

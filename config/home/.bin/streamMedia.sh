@@ -12,6 +12,7 @@ function playYT() {
 	while true; do
 
 		[[ -z "$LIST" ]] && URL_LIST=()
+		#  grep -m1 -oP 'href="\/watch\?v=\K.{11}'
 		TMP="$(wget -q -O- "https://www.youtube.com/watch?v=$URL_CURRENT&list=$LIST" | grep -o -P '.watch\?v=.{0,11}' | cut -d '=' -f2)"
 
 		# echo "TMP" = "${TMP[*]}"

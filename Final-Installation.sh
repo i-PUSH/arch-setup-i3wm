@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USR=$(ls /home/)
+
 {
 echo "Final-Installation"
 
@@ -13,15 +15,13 @@ systemctl enable fstrim.timer
 # Enable TLP
 systemctl enable tlp.service
 systemctl enable tlp-sleep.service
-systemctl disable systemd-rfkill.service
+systemctl mask systemd-rfkill.service
+systemctl mask systemd-rfkill.socket
 
 # Enable UFW
 systemctl enable ufw
 ufw default deny
 ufw enable
-
-# Configure the network
-systemctl enable NetworkManager.service
 
 # Configure Keyboardlayout
 localectl set-x11-keymap de pc105 nodeadkeys
@@ -33,6 +33,9 @@ rm -R /i-PUSH-arch-setup-i3wm/
 read -p "Finish!!! Press enter to reboot..."
 
 # Pipe all output into log file
-} |& tee -a /home/$(ls /home/)/Arch-Installation.log
+} |& tee -a /home/$USR/Arch-Installation.log
+
+chown $USR:$USR /home/$USR/Arch-Installation.log
+chmod 600 /home/$USR/Arch-Installation.log
 
 reboot

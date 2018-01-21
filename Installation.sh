@@ -49,5 +49,10 @@ echo "options cryptdevice=PARTUUID=$ROOT:root root=/dev/mapper/root quite rw" >>
 echo "default arch" > /boot/loader/loader.conf
 echo "editor 0" >> /boot/loader/loader.conf
 
+cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-lts.conf
+sed -i '/title/s/$/ LTS/' /boot/loader/entries/arch-lts.conf
+sed -i '/vmlinuz/s/$/-lts/' /boot/loader/entries/arch-lts.conf
+sed -i '/initramfs/s/linux/linux-lts/' /boot/loader/entries/arch-lts.conf
+
 # Run Post-Installation.sh
 /i-PUSH-arch-setup-i3wm/Post-Installation.sh
