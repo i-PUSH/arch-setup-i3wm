@@ -52,11 +52,16 @@ vector<string> runBashCmd(const string cmd) {
 int main(int argc, char** argv) {
 	vector<string> dirList;
 	string args = string(argv[1]) + " " + argv[2] + " ";
+	string notShow = "";
 
-	for (int i = 3; i < argc; i++) args = args + "--exclude '" + argv[i] + "' ";
+	for (int i = 3; i < argc; i++) {
+		if (argv[i][0] == '-' && argv[i][1] == '-')
+			notShow = notShow + "--exclude '" + string(argv[i]).erase(0, 2) + "' ";
+		else args = args + "--exclude '" + argv[i] + "' ";
+	}
 
 	// while (getline(cin, line)) allList.push_back(line);
-	vector<string> allList = runBashCmd(string("rsync -nrl --out-format='%i |%n' --delete ") + args);
+	vector<string> allList = runBashCmd(string("rsync -nrl --out-format='%i |%n' --delete ") + args + notShow);
 
 	dirList.push_back(splitStr(findFirstDir(allList), "|"));
 	findBaseDir(allList, dirList);

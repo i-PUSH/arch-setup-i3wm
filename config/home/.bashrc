@@ -55,7 +55,7 @@ alias trash='gio trash'
 alias fehbg='feh --bg-fill "$(xsel -b)"'
 alias lss='systemctl list-units -t service'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
-alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ Synology/'
+alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ Synology/ --.git/'
 
 # Functions
 cdd() { cd "$1" && ls -all; }
