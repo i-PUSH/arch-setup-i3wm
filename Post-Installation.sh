@@ -73,6 +73,7 @@ pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
 pacman -S --noconfirm jdk8-openjdk gradle
 pacman -S --noconfirm intellij-idea-community-edition
+pacman -S --noconfirm gedit
 pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2 libmtp mtpfs gvfs-mtp
