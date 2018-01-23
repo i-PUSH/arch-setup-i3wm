@@ -10,8 +10,8 @@ timedatectl set-ntp true
 parted /dev/sda mklabel gpt
 echo "mkpart ESP fat32 0% 200MiB
 set 1 boot on
-mkpart primary linux-swap 200MiB 4.2GiB
-mkpart primary ext4 4.2GiB 100%
+mkpart primary linux-swap 200MiB 4GiB
+mkpart primary ext4 4GiB 100%
 quit
 " | parted /dev/sda
 

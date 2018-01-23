@@ -29,7 +29,7 @@ pacman -S --noconfirm tree
 pacman -S --noconfirm ranger w3m
 pacman -S --noconfirm pulseaudio pulseaudio-alsa
 pacman -S --noconfirm htop
-pacman -S --noconfirm screen
+pacman -S --noconfirm tmux
 pacman -S --noconfirm youtube-dl
 pacman -S --noconfirm wget curl axel
 pacman -S --noconfirm rsync
@@ -120,13 +120,13 @@ chmod -R 700 /home/$userName/.bin/
 
 # Install Visual Studio code
 wget "https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz" -O - | tar xz -C /tmp
-su - $userName -c 'cd /tmp/visual-studio-code-bin && makepkg -s'
+sudo -u $userName bash -c 'cd /tmp/visual-studio-code-bin && makepkg -s'
 pacman -U --noconfirm /tmp/visual-studio-code-bin/visual-studio-code-bin*.pkg.tar.xz
 rm -R /tmp/visual-studio-code-bin
 
 # Install Sublime text editor
 # wget "https://aur.archlinux.org/cgit/aur.git/snapshot/sublime-text-dev.tar.gz" -O - | tar xz -C /tmp
-# su - $userName -c 'cd /tmp/sublime-text-dev && makepkg -s'
+# sudo -u $userName bash -c 'cd /tmp/sublime-text-dev && makepkg -s'
 # pacman -U --noconfirm /tmp/sublime-text-dev/sublime-text-dev*.pkg.tar.xz
 # rm -R /tmp/sublime-text-dev
 

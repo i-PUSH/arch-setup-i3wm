@@ -12,7 +12,8 @@ bool isSubStr(string subStr, string str) {
 
 string splitStr(string str, string delimiter) {
 	size_t pos = str.find(delimiter);
-	return str.substr(pos);
+	if (pos != std::string::npos && str.length() > pos) return str.substr(pos);
+	else return "none";
 }
 
 void findBaseDir(vector<string>& allList, vector<string>& dirList) {

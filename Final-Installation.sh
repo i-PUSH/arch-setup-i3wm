@@ -29,6 +29,9 @@ localectl set-x11-keymap de pc105 nodeadkeys
 # Remove installation files
 rm -R /i-PUSH-arch-setup-i3wm/
 
+# Lock root user
+passwd -l root
+
 # Finish Installation
 read -p "Finish!!! Press enter to reboot..."
 
