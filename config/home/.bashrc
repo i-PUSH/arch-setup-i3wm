@@ -95,3 +95,9 @@ extract () {
     echo "'$1' is not a valid file"
     fi
 }
+
+wgex () {
+	wget $1 -P $2
+	extract "$2$(basename "$1")" $2
+	trash "$2$(basename "$1")"
+}
