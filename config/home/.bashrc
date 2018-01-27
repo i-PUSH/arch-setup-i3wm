@@ -76,19 +76,20 @@ switchKernel() {
 
 extract () {
     if [ -f $1 ] ; then
+		[ -z $2 ] && dir="." || dir=$2
         case $1 in
-            *.tar.bz2)   tar xjf $1     ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar e $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xf $1      ;;
-            *.tbz2)      tar xjf $1     ;;
-            *.tgz)       tar xzf $1     ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)     echo "'$1' cannot be extracted via extract()" ;;
+            *.tar.bz2)   tar xjf $1 -C $dir ;;
+            *.tar.gz)    tar xzf $1 -C $dir ;;
+            *.tbz2)      tar xjf $1-C  $dir ;;
+            *.tgz)       tar xzf $1 -C $dir ;;
+			*.tar)       tar xf $1 -C $dir ;;
+			*.bz2)       bzcat $1 > $dir/"${1%.*}" ;;
+            *.gz)        zcat $1 > $dir/"${1%.*}" ;;
+			*.rar)       unrar e $1 $dir ;;
+            *.zip)       unzip $1 -d $dir ;;
+            *.7z)        7z x $1 -o$dir ;;
+			*.Z)         uncompress -c $1 > $dir/"${1%.*}" ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
         esac
     else
     echo "'$1' is not a valid file"

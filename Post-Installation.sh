@@ -26,6 +26,7 @@ pacman -S --noconfirm gnome-keyring libsecret seahorse
 pacman -S --noconfirm sudo
 pacman -S --noconfirm bash-completion
 pacman -S --noconfirm tree
+pacman -S --noconfirm atool
 pacman -S --noconfirm ranger w3m
 pacman -S --noconfirm pulseaudio pulseaudio-alsa
 pacman -S --noconfirm htop
