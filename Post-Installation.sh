@@ -115,6 +115,12 @@ cp -R /i-PUSH-arch-setup-i3wm/config/home/. /home/$userName/
 g++ /home/$userName/.bin/Rsync.cpp -o /home/$userName/.bin/Rsync
 rm /home/$userName/.bin/Rsync.cpp
 
+# Compile PwdGenPro
+git clone https://github.com/i-PUSH/PwdGenPro-Java.git /tmp/PwdGenPro
+gradle build -p /tmp/PwdGenPro/
+cat /tmp/PwdGenPro/Payload/stub.sh /tmp/PwdGenPro/build/libs/*.jar > /home/$userName/.bin/pwdGenPro
+chmod +x /home/$userName/.bin/pwdGenPro
+
 # Change premissions
 chown -R $userName:$userName /home/$userName/
 chmod -R 700 /home/$userName/.bin/
