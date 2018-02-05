@@ -54,6 +54,7 @@ alias vim='vim -u NONE'
 alias trash='gio trash'
 alias fehbg='feh --bg-fill "$(xsel -b)"'
 alias lss='systemctl list-units -t service'
+alias update='sudo pacman -Syyu --ignore linux-lts*'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
 alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ /Desktop/Synology/ /Windows/ --.git/'
 

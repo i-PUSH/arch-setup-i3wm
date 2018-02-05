@@ -119,7 +119,6 @@ rm /home/$userName/.bin/Rsync.cpp
 git clone https://github.com/i-PUSH/PwdGenPro-Java.git /tmp/PwdGenPro
 gradle build -p /tmp/PwdGenPro/
 cat /tmp/PwdGenPro/Payload/stub.sh /tmp/PwdGenPro/build/libs/*.jar > /home/$userName/.bin/pwdGenPro
-chmod +x /home/$userName/.bin/pwdGenPro
 
 # Change premissions
 chown -R $userName:$userName /home/$userName/
