@@ -55,7 +55,7 @@ function playYT() {
 [[ $(pgrep "mpv") ]] && pkill "mpv"
 [[ $(pgrep "streamMedia.sh" | wc -l) -gt 2 ]] && pkill "streamMedia.sh"
 
-TERMINAL="urxvt"
+[ -z $TERMINAL ] && TERMINAL="urxvt"
 URL="http://46.10.150.243/njoy.mp3"
 
 CB="$(xsel -b)"

@@ -74,7 +74,6 @@ pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
 pacman -S --noconfirm jdk8-openjdk gradle
 pacman -S --noconfirm intellij-idea-community-edition
-pacman -S --noconfirm gedit
 pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2 libmtp mtpfs gvfs-mtp
@@ -129,14 +128,12 @@ wget "https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar
 chown -R $userName:$userName /tmp/visual-studio-code-bin/
 sudo -u $userName bash -c 'cd /tmp/visual-studio-code-bin && makepkg -s'
 pacman -U --noconfirm /tmp/visual-studio-code-bin/visual-studio-code-bin*.pkg.tar.xz
-rm -R /tmp/visual-studio-code-bin
 
 # Install Sublime text editor
-# wget "https://aur.archlinux.org/cgit/aur.git/snapshot/sublime-text-dev.tar.gz" -O - | tar xz -C /tmp
-# chown -R $userName:$userName /tmp/sublime-text-dev/
-# sudo -u $userName bash -c 'cd /tmp/sublime-text-dev && makepkg -s'
-# pacman -U --noconfirm /tmp/sublime-text-dev/sublime-text-dev*.pkg.tar.xz
-# rm -R /tmp/sublime-text-dev
+wget "https://aur.archlinux.org/cgit/aur.git/snapshot/sublime-text-dev.tar.gz" -O - | tar xz -C /tmp
+chown -R $userName:$userName /tmp/sublime-text-dev/
+sudo -u $userName bash -c 'cd /tmp/sublime-text-dev && makepkg -s'
+pacman -U --noconfirm /tmp/sublime-text-dev/sublime-text-dev*.pkg.tar.xz
 
 # Clean up and optimize pacman
 pacman -Sc --noconfirm && pacman-optimize
