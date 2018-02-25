@@ -16,3 +16,7 @@ URxvt.iso14755_52: false
 !urxvt color scheme:
 URxvt*background: #2B2B2B
 URxvt*foreground: #DEDEDE
+
+!blue
+*color4:	#3060aa
+*color12:	#6099dd

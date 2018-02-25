@@ -57,6 +57,9 @@ alias lss='systemctl list-units -t service'
 alias update='sudo pacman -Syyu --ignore linux-lts*'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
 alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ /Desktop/Synology/ /Windows/ --.git/'
+alias xclone='xrandr --output eDP1 --auto --output HDMI1 --auto --same-as eDP1'
+alias xdual='xrandr --output eDP1 --mode 1366x768 --pos 0x0 --output HDMI1 --mode 1920x1080 --left-of eDP1'
+alias swAltWinBtn='xmodmap ~/.Xmodmap'
 
 # Functions
 cdd() { cd "$1" && ls -all; }
