@@ -58,7 +58,7 @@ alias update='sudo pacman -Syyu --ignore linux-lts*'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
 alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ /Desktop/Synology/ /Windows/ --.git/'
 alias xclone='xrandr --output eDP1 --auto --output HDMI1 --auto --same-as eDP1'
-alias xdual='xrandr --output eDP1 --mode 1366x768 --pos 0x0 --output HDMI1 --mode 1920x1080 --left-of eDP1'
+alias xdual='xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080'
 alias swAltWinBtn='xmodmap ~/.Xmodmap'
 
 # Functions
@@ -80,19 +80,19 @@ switchKernel() {
 
 extract () {
     if [ -f $1 ] ; then
-		[ -z $2 ] && dir="." || dir=$2
+        [ -z $2 ] && dir="." || dir=$2
         case $1 in
             *.tar.bz2)   tar xjf $1 -C $dir ;;
             *.tar.gz)    tar xzf $1 -C $dir ;;
             *.tbz2)      tar xjf $1-C  $dir ;;
             *.tgz)       tar xzf $1 -C $dir ;;
-			*.tar)       tar xf $1 -C $dir ;;
-			*.bz2)       bzcat $1 > $dir/"${1%.*}" ;;
+            *.tar)       tar xf $1 -C $dir ;;
+            *.bz2)       bzcat $1 > $dir/"${1%.*}" ;;
             *.gz)        zcat $1 > $dir/"${1%.*}" ;;
-			*.rar)       unrar e $1 $dir ;;
+            *.rar)       unrar e $1 $dir ;;
             *.zip)       unzip $1 -d $dir ;;
             *.7z)        7z x $1 -o$dir ;;
-			*.Z)         uncompress -c $1 > $dir/"${1%.*}" ;;
+            *.Z)         uncompress -c $1 > $dir/"${1%.*}" ;;
             *)           echo "'$1' cannot be extracted via extract()" ;;
         esac
     else
@@ -101,7 +101,7 @@ extract () {
 }
 
 wgex () {
-	wget $1 -P $2
-	extract "$2$(basename "$1")" $2
-	trash "$2$(basename "$1")"
+    wget $1 -P $2
+    extract "$2$(basename "$1")" $2
+    trash "$2$(basename "$1")"
 }
