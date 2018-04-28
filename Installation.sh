@@ -14,9 +14,9 @@ passwd
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 # Set locales and generate them
-echo LANG=de_DE.UTF-8 > /etc/locale.conf
-echo LANGUAGE=de_DE >> /etc/locale.conf
-echo KEYMAP=de-latin1 > /etc/vconsole.conf
+echo "LANG=de_DE.UTF-8" > /etc/locale.conf
+echo "LANGUAGE=de_DE" >> /etc/locale.conf
+echo "KEYMAP=de-latin1" > /etc/vconsole.conf
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo "en_US ISO-8859-1" >> /etc/locale.gen
 echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen

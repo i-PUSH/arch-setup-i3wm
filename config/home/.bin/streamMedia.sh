@@ -31,16 +31,16 @@ function playYT() {
 				URL_PLAYED+=( "$i" )
 				if [[ "$DOWNLOAD" == "1" ]]; then
 					if [[ "$NO_VIDEO" == "1" ]]; then
-						$TERMINAL -e youtube-dl -x --audio-format "mp3" "$URL_CURRENT"
+						$TERMINAL -e "youtube-dl -x --audio-format mp3 $URL_CURRENT"
 						[[ -z "$LIST" ]] && exit
 					else
-						$TERMINAL -e youtube-dl "$URL_CURRENT"
+						$TERMINAL -e "youtube-dl $URL_CURRENT"
 						[[ -z "$LIST" ]] && exit
 					fi
 				fi
 				if [[ "$DOWNLOAD" != "1" ]]; then
 					if [[ "$NO_VIDEO" == "1" ]]; then
-						$TERMINAL -e mpv --no-video "https://www.youtube.com/watch?v=$URL_CURRENT&list=$LIST"
+						$TERMINAL -e "mpv --no-video https://www.youtube.com/watch?v=$URL_CURRENT&list=$LIST"
 					else
 						mpv "https://www.youtube.com/watch?v=$URL_CURRENT&list=$LIST"
 					fi
@@ -65,7 +65,7 @@ for i in "${@}"; do [[ "$i" == "-d" ]] && DOWNLOAD="-d"; done
 for i in "${@}"; do [[ "$i" == "-nv" ]] && NO_VIDEO="-nv"; done
 
 [[ "$URL" =~ ("youtube.com"|"youtu.be") ]] && playYT "$URL" $DOWNLOAD $NO_VIDEO
-[[ ! -z "$DOWNLOAD" ]] && $TERMINAL -e youtube-dl "$URL" && exit
-[[ ! -z "$NO_VIDEO" ]] && $TERMINAL -e mpv --no-video $URL || mpv "$URL"
+[[ ! -z "$DOWNLOAD" ]] && $TERMINAL -e "youtube-dl $URL" && exit
+[[ ! -z "$NO_VIDEO" ]] && $TERMINAL -e "mpv --no-video $URL" || mpv "$URL"
 
 exit

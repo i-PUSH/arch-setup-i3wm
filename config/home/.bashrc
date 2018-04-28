@@ -5,18 +5,22 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-[[ $DISPLAY ]] && shopt -s checkwinsize
+# Set default term to override xterm-termite
+export TERM=linux
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+
+# save history of every terminal
+export PROMPT_COMMAND='history -a'
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -35,13 +39,13 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Bash prompt customize
-GREEN='\[\e[32m\]'
-RED='\[\e[31m\]'
-RESET='\[\e[0m\]'
+# Bash prompt string customize. PSC ~ "Prompt string color"
+PSC_GREEN='\[\e[32m\]'
+PSC_RED='\[\e[31m\]'
+PSC_RESET='\[\e[0m\]'
 # DOT='\342\200\242'
-LC="\`[ \$? = 0 ] && echo $GREEN\w$RESET || echo $RED\w$RESET\`"
-PS1="< ${LC} > "
+PS_LC="\`[ \$? = 0 ] && echo $PSC_GREEN\W$PSC_RESET || echo $PSC_RED\W$PSC_RESET\`"
+export PS1="< ${PS_LC} > "
 # PS1=$'\u250F\u2501\u276A\[\033[0;31m\]\e[219;50;50m\u\e[0m : \w\u276B\n\u2517\u2501\u27A4 '   Red
 # PS1=$'\u250F\u2501\u276A\e[1m\e[219;50;50m\u\e[0m : \w\u276B\n\u2517\u2501\u27A4 '    Bold
 
@@ -54,12 +58,10 @@ alias vim='vim -u NONE'
 alias trash='gio trash'
 alias fehbg='feh --bg-fill "$(xsel -b)"'
 alias lss='systemctl list-units -t service'
-alias update='sudo pacman -Syyu --ignore linux-lts*'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
 alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ /Desktop/Synology/ /Windows/ --.git/'
-alias xclone='xrandr --output eDP1 --auto --output HDMI1 --auto --same-as eDP1'
-alias xdual='xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080'
-alias swAltWinBtn='xmodmap ~/.Xmodmap'
+alias xone='xrandr --output $MONITOR1 --scale 1x1 --off --output $MONITOR2 --auto --scale 1x1'
+alias xdual='xrandr --output $MONITOR1 --auto --scale 1x1 --output $MONITOR2 --auto --scale 1x1  --primary --preferred --right-of $MONITOR1'
 
 # Functions
 cdd() { cd "$1" && ls -all; }
@@ -67,6 +69,20 @@ cdd() { cd "$1" && ls -all; }
 fail() { journalctl "$@" | egrep -i "warn|error|fail"; }
 
 diffDirs() { diff -r -q {$1,$2} -x "$3" -x "$4" -x "$5" -x "$6"; }
+
+xmirror() {
+    RES=$(xrandr | sed -nr "s/$1 connected ([0-9]+x[0-9]+).*/\1/p")
+     [ -z $RES ] && RES=$(xrandr | sed -nr "s/$1 connected primary ([0-9]+x[0-9]+).*/\1/p")
+    xrandr --output $1 --auto --primary --preferred --output $2 --auto --same-as $1 --scale-from $RES
+}
+
+update() {
+    if grep -q "lts" /boot/loader/loader.conf; then
+        sudo pacman -Syyu --ignore linux,linux-headers,linux-api-headers
+    else
+        sudo pacman -Syyu --ignore linux-lts,linux-lts-headers
+    fi
+}
 
 switchKernel() {
     if grep -q "lts" /boot/loader/loader.conf; then

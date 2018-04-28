@@ -1,0 +1,79 @@
+! ------------------------------------------------------------------------------
+! Colour Configuration
+! ------------------------------------------------------------------------------
+
+! black
+*.color0  : #4b5262
+*.color8  : #434a5a
+
+! red
+*.color1  : #ff5555
+*.color9  : #ff6655
+
+! green
+*.color10  : #50fa7b
+*.color2 : #44ed6f
+
+! yellow
+*.color3  : #f1fa8c
+*.color11 : #ECBE7B
+
+! blue
+*.color4  : #61bfff
+*.color12 : #61bfff
+
+! magenta
+*.color5  : #ff79c6
+*.color13 : #c678dd
+
+! cyan
+*.color6  : #24d0f4
+*.color14 : #24d0f4
+
+! white
+*.color7  : #e5e9f0
+*.color15 : #d1d5dc
+
+! ------------------------------------------------------------------------------
+! Xft Font Configuration
+! ------------------------------------------------------------------------------
+
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! ------------------------------------------------------------------------------
+! URxvt configs
+! -----------------------------------------------------------------------------
+
+URxvt*.foreground:   #f8f8f2
+URxvt*.background:   #282a36
+URxvt*font:			xft:DejaVu Sans Mono:regular:size=12
+URxvt*boldFont:		xft:DejaVu Sans Mono:bold:size=12
+URxvt*italicFont:		xft:DejaVu Sans Mono:italic:size=12
+URxvt*boldItalicFont:		xft:DejaVu Sans Mono:bold italic:size=12
+URxvt.geometry:			82x16
+URxvt*letterSpace:	    -1
+URxvt.lineSpace:		0
+URxvt*internalBorder:   24
+URxvt*externalBorder:   0
+URxvt*depth:            32
+URxvt*saveline:         2000
+URxvt*termName:         rxvt-256color
+URxvt*scrollBar:        false
+URxvt*scrollBar_right:  false
+URxvt.urlLauncher:      firefox
+URxvt.underlineURLs:    true
+URxvt.urlButton:        1
+URxvt*buffered:         false
+URxvt.urgentOnBell:	True
+URxvt.keysym.Control-Up:   \033[1;5A
+URxvt.keysym.Control-Down:    \033[1;5B
+URxvt.keysym.Control-Left:    \033[1;5D
+URxvt.keysym.Control-Right:    \033[1;5C
+! disable the ctrl+shift feature
+URxvt.iso14755: false
+URxvt.iso14755_52: false

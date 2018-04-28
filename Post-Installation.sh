@@ -43,6 +43,7 @@ pacman -S --noconfirm nmap
 pacman -S --noconfirm vim
 pacman -S --noconfirm ffmpeg
 pacman -S --noconfirm git
+pacman -S --noconfirm go go-tools
 pacman -S --noconfirm feh
 pacman -S --noconfirm openssh
 pacman -S --noconfirm openvpn easy-rsa
@@ -52,17 +53,18 @@ pacman -S --noconfirm xorg xorg-xinit libva-intel-driver mesa
 pacman -S --noconfirm xf86-video-intel xf86-input-synaptics
 
 # Install fonts
-pacman -S --noconfirm ttf-droid ttf-dejavu
+pacman -S --noconfirm ttf-droid ttf-ionicons ttf-dejavu
 
 # Install desktop & window manager
-pacman -S --noconfirm i3-wm i3status i3lock dmenu
+pacman -S --noconfirm i3-gaps i3status i3lock dmenu
 
 # Install GTK-Theme and Icons
-pacman -S --noconfirm arc-gtk-theme arc-icon-theme
+pacman -S --noconfirm arc-gtk-theme hicolor-icon-theme papirus-icon-theme
 
 # Install graphical programs
-pacman -S --noconfirm rxvt-unicode
-pacman -S --noconfirm zenity
+pacman -S --noconfirm rxvt-unicode termite
+pacman -S --noconfirm dunst
+pacman -S --noconfirm ghex
 pacman -S --noconfirm lxappearance
 pacman -S --noconfirm pavucontrol
 pacman -S --noconfirm gnome-system-monitor
@@ -72,8 +74,7 @@ pacman -S --noconfirm gnome-calculator
 pacman -S --noconfirm libreoffice-fresh hunspell-de
 pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
-pacman -S --noconfirm jdk8-openjdk gradle
-pacman -S --noconfirm intellij-idea-community-edition
+pacman -S --noconfirm jdk8-openjdk gradle intellij-idea-community-edition
 pacman -S --noconfirm gimp
 pacman -S --noconfirm gparted dosfstools ntfs-3g mtools
 pacman -S --noconfirm pcmanfm-gtk3 gvfs udisks2 libmtp mtpfs gvfs-mtp
@@ -101,7 +102,12 @@ sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 # Allow to execute shutdown without password
 echo "$userName ALL = NOPASSWD: /usr/bin/shutdown" >> /etc/sudoers
 
-# Add Cron job
+# Increase nofile limit to build VS code. This file should be deprecated when using systemd,
+# but it was the only way to change the limits.
+echo "$userName		soft	nofile		9000" >> /etc/security/limits.conf
+echo "$userName		hard	nofile		9000" >> /etc/security/limits.conf
+
+# Add Cron job for monitoring battery
 { crontab -l -u $userName; echo "*/5 * * * * env DISPLAY=:0  /home/$userName/.bin/BatteryWarning.sh"; } | crontab -u $userName -
 
 # Configure synaptics touchpad
@@ -122,6 +128,18 @@ cat /tmp/PwdGenPro/Payload/stub.sh /tmp/PwdGenPro/build/libs/*.jar > /home/$user
 # Change premissions
 chown -R $userName:$userName /home/$userName/
 chmod -R 700 /home/$userName/.bin/
+
+# Install Cower
+wget "https://aur.archlinux.org/cgit/aur.git/snapshot/cower.tar.gz" -O - | tar xz -C /tmp
+chown -R $userName:$userName /tmp/cower/
+sudo -u $userName bash -c 'cd /tmp/cower && gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53 && makepkg -s'
+pacman -U --noconfirm /tmp/cower/cower*.pkg.tar.xz
+
+# Install Polybar
+wget "https://aur.archlinux.org/cgit/aur.git/snapshot/polybar.tar.gz" -O - | tar xz -C /tmp
+chown -R $userName:$userName /tmp/polybar/
+sudo -u $userName bash -c 'cd /tmp/polybar && makepkg -s'
+pacman -U --noconfirm /tmp/polybar/polybar*.pkg.tar.xz
 
 # Install Visual Studio code
 wget "https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz" -O - | tar xz -C /tmp

@@ -29,6 +29,11 @@ localectl set-x11-keymap de pc105 nodeadkeys
 # Remove installation files
 rm -R /i-PUSH-arch-setup-i3wm/
 
+# Enable auto login on tty1
+echo "[Service]" > /etc/systemd/system/getty@tty1.service.d/override.conf
+echo "ExecStart=" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+echo "ExecStart=-/usr/bin/agetty --autologin $USR --noclear %I \$TERM" >> /etc/systemd/system/getty@tty1.service.d/override.conf
+
 # Lock root user
 passwd -l root
 

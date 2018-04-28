@@ -7,13 +7,13 @@
 
 # i3 config file (v4)
 #
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -40,7 +40,7 @@ bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -92,29 +92,42 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -125,71 +138,89 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-		# These bindings trigger as soon as you enter the resize mode
+	# These bindings trigger as soon as you enter the resize mode
 
-		# Pressing left will shrink the window’s width.
-		# Pressing right will grow the window’s width.
-		# Pressing up will shrink the window’s height.
-		# Pressing down will grow the window’s height.
-		bindsym j resize shrink width 10 px or 10 ppt
-		bindsym k resize grow height 10 px or 10 ppt
-		bindsym l resize shrink height 10 px or 10 ppt
-		bindsym odiaeresis resize grow width 10 px or 10 ppt
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym j resize shrink width 10 px or 10 ppt
+	bindsym k resize grow height 10 px or 10 ppt
+	bindsym l resize shrink height 10 px or 10 ppt
+	bindsym odiaeresis resize grow width 10 px or 10 ppt
 
-		# same bindings, but for the arrow keys
-		bindsym Left resize shrink width 10 px or 10 ppt
-		bindsym Down resize grow height 10 px or 10 ppt
-		bindsym Up resize shrink height 10 px or 10 ppt
-		bindsym Right resize grow width 10 px or 10 ppt
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
 
-		# back to normal: Enter or Escape
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	# back to normal: Enter or Escape or $mod+r
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-# Define colors used
-set $bg-color				#242424
-set $inactive-bg-color  	#242424
-set $text-color				#f3f4f5
-set $inactive-text-color	#676E7D
-set $urgent-bg-color		#5294e2
+#bar {
+#	i3bar_command i3bar -t
+#	status_command i3status
+#	tray_output primary
+#	colors {
+#		background #00000000
+#		statusline #ffffff
+#		separator #ffffff
+#		focused_workspace  #00000000 #00000000 #ffffff
+#		active_workspace   #00000000 #00000000 #ffffff
+#		inactive_workspace #00000000 #00000000 #888888
+#		urgent_workspace   #00000000 #00000000 #f22e2e
+#	}
+#}
 
-# Windows         	Border		Background    Text     Indicator
-client.focused    	#686767		#686767       #ffffff
-client.unfocused  	$bg-color	$bg-color     #ffffff
+### Scratchpad ###
+for_window [instance="dropdown"] floating enable
+# for_window [instance="dropdown"] resize set 625 400
+for_window [instance="dropdown"] move scratchpad
+for_window [instance="dropdown"] border pixel 5
+bindsym $mod+x [instance="dropdown"] scratchpad show; [instance="dropdown"] move position center
 
-bar {
-	status_command i3status
-	colors {
-		background	$bg-color
-		separator	#757575
-		#					border				background			text
-		focused_workspace	$bg-color          	$bg-color          	$text-color
-		inactive_workspace	$inactive-bg-color 	$inactive-bg-color 	$inactive-text-color
-		urgent_workspace	$urgent-bg-color   	$urgent-bg-color   	$text-color
-	}
-}
+### Change client colors ###
+client.focused #718799 #718799 #ffffff #718799
 
-# Own shortcuts
-# Inc Dec Mute Music
-bindsym XF86AudioMute exec ~/.bin/ManageSound.sh 0
-bindsym XF86AudioRaiseVolume exec ~/.bin/ManageSound.sh 1
-bindsym XF86AudioLowerVolume exec ~/.bin/ManageSound.sh 2
-bindsym $mod+Control+Up exec ~/.bin/ManageSound.sh 1
-bindsym $mod+Control+Down exec ~/.bin/ManageSound.sh 2
-# XF86MonBrightnessDown
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-# XF86MonBrightnessUp
+### i3-gaps config ###
+gaps outer 5
+gaps inner 10
+smart_gaps on
+hide_edge_borders smart
+workspace_auto_back_and_forth yes
+new_window none
+for_window [class="^.*"] border pixel 1
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+### Own shortcuts ###
+bindsym $mod+q exec ~/.bin/SystemControl.sh
+bindsym XF86AudioMute exec ~/.bin/ManageSound.sh "mute"
+bindsym XF86AudioRaiseVolume exec ~/.bin/ManageSound.sh "inc"
+bindsym XF86AudioLowerVolume exec ~/.bin/ManageSound.sh "dec"
+bindsym $mod+Control+Up exec ~/.bin/ManageSound.sh "inc"
+bindsym $mod+Control+Down exec ~/.bin/ManageSound.sh "dec"
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-# Make Screenshot
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym --release Print exec scrot ~/%Y-%m-%d-%T-screenshot.png
 bindsym --release Shift+Print exec scrot -s ~/%Y-%m-%d-%T-screenshot.png
-# Shutdown or Reboot PC
-bindsym $mod+q exec ~/.bin/SystemControl.sh
 
-# Autostarted applications
+### Start-up programs ###
+# exec --no-startup-id xrandr --output $MONITOR1 --auto --output $MONITOR2 --primary --preferred --right-of $MONITOR1
+exec --no-startup-id xrandr --output $MONITOR1 --off --output $MONITOR2 --auto --primary --preferred
+exec_always --no-startup-id setxkbmap -model pc105 -layout de -variant nodeadkeys -option altwin:swap_lalt_lwin
+exec_always --no-startup-id xrdb -merge -I$HOME ~/.Xresources
+exec_always --no-startup-id ~/.bin/Polybar-run.sh
+exec_always --no-startup-id ~/.bin/Compton-run.sh
+exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id nm-applet
+exec --no-startup-id dunst
+exec --no-startup-id i3-sensible-terminal --name dropdown
