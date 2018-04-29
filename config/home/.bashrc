@@ -5,9 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Set default term to override xterm-termite
-export TERM=linux
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 export HISTCONTROL=ignoreboth
@@ -56,6 +53,7 @@ alias la='ls -all'
 alias grepi='grep -i'
 alias vim='vim -u NONE'
 alias trash='gio trash'
+alias ssh='TERM=xterm ssh'
 alias fehbg='feh --bg-fill "$(xsel -b)"'
 alias lss='systemctl list-units -t service'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'

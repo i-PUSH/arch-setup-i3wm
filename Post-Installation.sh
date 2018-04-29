@@ -56,7 +56,7 @@ pacman -S --noconfirm xf86-video-intel xf86-input-synaptics
 pacman -S --noconfirm ttf-droid ttf-ionicons ttf-dejavu
 
 # Install desktop & window manager
-pacman -S --noconfirm i3-gaps i3status i3lock dmenu
+pacman -S --noconfirm i3-gaps i3status i3lock dmenu compton
 
 # Install GTK-Theme and Icons
 pacman -S --noconfirm arc-gtk-theme hicolor-icon-theme papirus-icon-theme
@@ -102,11 +102,6 @@ sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 # Allow to execute shutdown without password
 echo "$userName ALL = NOPASSWD: /usr/bin/shutdown" >> /etc/sudoers
 
-# Increase nofile limit to build VS code. This file should be deprecated when using systemd,
-# but it was the only way to change the limits.
-echo "$userName		soft	nofile		9000" >> /etc/security/limits.conf
-echo "$userName		hard	nofile		9000" >> /etc/security/limits.conf
-
 # Add Cron job for monitoring battery
 { crontab -l -u $userName; echo "*/5 * * * * env DISPLAY=:0  /home/$userName/.bin/BatteryWarning.sh"; } | crontab -u $userName -
 
@@ -136,12 +131,14 @@ sudo -u $userName bash -c 'cd /tmp/cower && gpg --recv-keys --keyserver hkp://pg
 pacman -U --noconfirm /tmp/cower/cower*.pkg.tar.xz
 
 # Install Polybar
+pacman -S --noconfirm jsoncpp libuv rhash cmake
 wget "https://aur.archlinux.org/cgit/aur.git/snapshot/polybar.tar.gz" -O - | tar xz -C /tmp
 chown -R $userName:$userName /tmp/polybar/
 sudo -u $userName bash -c 'cd /tmp/polybar && makepkg -s'
 pacman -U --noconfirm /tmp/polybar/polybar*.pkg.tar.xz
 
 # Install Visual Studio code
+pacman -S --noconfirm gconf
 wget "https://aur.archlinux.org/cgit/aur.git/snapshot/visual-studio-code-bin.tar.gz" -O - | tar xz -C /tmp
 chown -R $userName:$userName /tmp/visual-studio-code-bin/
 sudo -u $userName bash -c 'cd /tmp/visual-studio-code-bin && makepkg -s'
