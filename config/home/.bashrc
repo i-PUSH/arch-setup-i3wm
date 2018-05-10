@@ -92,6 +92,21 @@ switchKernel() {
     fi
 }
 
+switchTheme() {
+    if grep -q "Polybar" $HOME/.config/i3/config; then
+        mv $HOME/.config/i3/config $HOME/.config/i3/config.polybar
+        mv $HOME/.config/i3/config.i3bar $HOME/.config/i3/config
+        killall -q polybar compton
+        i3-msg restart
+        echo "Switched to i3bar"
+    else
+        mv $HOME/.config/i3/config $HOME/.config/i3/config.i3bar
+        mv $HOME/.config/i3/config.polybar $HOME/.config/i3/config
+        i3-msg restart
+        echo "Switched to polybar"
+    fi
+}
+
 extract () {
     if [ -f $1 ] ; then
         [ -z $2 ] && dir="." || dir=$2

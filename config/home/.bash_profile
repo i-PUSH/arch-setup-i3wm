@@ -6,7 +6,7 @@
 
 export VISUAL=nano
 export EDITOR=nano
-export TERMINAL=termite
+export TERMINAL=urxvt
 export MONITOR1=eDP1
 export MONITOR2=HDMI1
 export BROWSER=firefox

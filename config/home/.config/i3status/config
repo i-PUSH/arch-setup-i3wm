@@ -1,6 +1,11 @@
 general {
-        colors = true
-        interval = 5
+	interval = 5
+	output_format = "i3bar"
+	markup = pango
+	colors = false
+	color_good = '#2f343f'
+	color_degraded = '#ebcb8b'
+	color_bad = '#ba5e57'
 }
 
 order += "volume master"
@@ -8,16 +13,18 @@ order += "battery 0"
 order += "tztime local"
 
 volume master {
-        format = "♪ %volume"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+	format = "<span background='#ffb86c'>  ♪ %volume  </span>"
+	format_muted = "<span background='#f4424b'>  ♪ Muted  </span>"
+	device = "default"
+	mixer = "Master"
+	mixer_idx = 0
 }
 
 battery 0 {
-        format = "%status %percentage"
+	format = "<span background='#50fa7b'>  ⚡ %percentage  </span>"
 }
 
 tztime local {
-        format = "%d-%m-%Y %H:%M"
+	format = "<span background='#8be9fb'>  %time  </span>"
+	format_time = "%a %-d %b %H:%M"
 }

@@ -105,8 +105,11 @@ echo "$userName ALL = NOPASSWD: /usr/bin/shutdown" >> /etc/sudoers
 # Add Cron job for monitoring battery
 { crontab -l -u $userName; echo "*/5 * * * * env DISPLAY=:0  /home/$userName/.bin/BatteryWarning.sh"; } | crontab -u $userName -
 
-# Configure synaptics touchpad
-cp /i-PUSH-arch-setup-i3wm/config/50-synaptics.conf /etc/X11/xorg.conf.d/
+# Disable powersave, prevent the WiFi card from automatically sleeping and halting connection
+echo "options rtl8723be fwlps=0" > /etc/modprobe.d/rtl8723be.conf
+
+# Configure synaptics and intel drivers
+cp -R /i-PUSH-arch-setup-i3wm/config/xorg/. /etc/X11/xorg.conf.d/
 
 # Copy all home folder files
 cp -R /i-PUSH-arch-setup-i3wm/config/home/. /home/$userName/

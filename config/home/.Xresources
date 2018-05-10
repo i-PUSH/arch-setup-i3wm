@@ -58,7 +58,7 @@ URxvt*boldItalicFont:		xft:DejaVu Sans Mono:bold italic:size=12
 URxvt.geometry:			82x16
 URxvt*letterSpace:	    -1
 URxvt.lineSpace:		0
-URxvt*internalBorder:   24
+URxvt*internalBorder:   12
 URxvt*externalBorder:   0
 URxvt*depth:            32
 URxvt*saveline:         2000

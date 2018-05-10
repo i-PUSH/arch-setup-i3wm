@@ -163,38 +163,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-	# i3bar_command i3bar -t
-	position top
-	status_command i3status
-	tray_output primary
-	font pango:DejaVu Sans Mono 12
-
-	colors {
-		background #282a36
-		statusline #282a36
-		separator #282a36
-
-		# colour of border, background, and text
-		focused_workspace	#282a36	#282a36	#f3f4f5
-		active_workspace	#282a36	#282a36	#f3f4f5
-		inactive_workspace	#282a36	#282a36	#676E7D
-		urgent_workspace	#282a36	#282a36	#f22e2e
-
-		# colors for transparent i3bar
-		# background #00000000
-		# statusline #ffffff
-		# separator #ffffff
-		# focused_workspace  #00000000 #00000000 #ffffff
-		# active_workspace   #00000000 #00000000 #ffffff
-		# inactive_workspace #00000000 #00000000 #888888
-		# urgent_workspace   #00000000 #00000000 #f22e2e
-    }
-	
-}
-
 ### Scratchpad ###
 # for_window [instance="dropdown"] resize set 625 400
 for_window [instance="dropdown"] floating enable
@@ -233,6 +201,8 @@ bindsym --release Shift+Print exec scrot -s ~/%Y-%m-%d-%T-screenshot.png
 exec --no-startup-id xrandr --output $MONITOR1 --off --output $MONITOR2 --auto --primary --preferred
 exec_always --no-startup-id setxkbmap -model pc105 -layout de -variant nodeadkeys -option altwin:swap_lalt_lwin
 exec_always --no-startup-id xrdb -merge -I$HOME ~/.Xresources
+exec_always --no-startup-id ~/.bin/Polybar-run.sh
+exec_always --no-startup-id ~/.bin/Compton-run.sh
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst
