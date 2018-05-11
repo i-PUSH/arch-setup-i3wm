@@ -14,6 +14,7 @@ export GOPATH="$HOME/Dev/Go"
 export GOBIN="$GOPATH/bin"
 export PATH="${PATH}:$HOME/.bin:$GOBIN"
 export SUDO_ASKPASS="$HOME/.bin/DmenuPass.sh"
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd'
 
 if [[ "$(tty)" == '/dev/tty1' ]]; then
     startx

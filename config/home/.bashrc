@@ -50,7 +50,10 @@ export PS1="< ${PS_LC} > "
 alias l='ls -CF'
 alias ll='ls -alF'
 alias la='ls -all'
+alias cp='cp -i'
+alias df='df -h'
 alias grepi='grep -i'
+alias diff='diff --color=auto'
 alias vim='vim -u NONE'
 alias trash='gio trash'
 alias ssh='TERM=xterm ssh'
@@ -63,6 +66,16 @@ alias xdual='xrandr --output $MONITOR1 --auto --scale 1x1 --output $MONITOR2 --a
 
 # Functions
 cdd() { cd "$1" && ls -all; }
+
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}
 
 fail() { journalctl "$@" | egrep -i "warn|error|fail"; }
 
