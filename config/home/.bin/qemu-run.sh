@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # qemu-img create -f raw image_name 4G
-# mount -t 9p -o trans=virtio,version=9p2000.L hostshare /tmp/host_files debiano,cache=none n
+# mount -t 9p -o trans=virtio,version=9p2000.L hostshare /path/to/mount
 # ssh user@localhost -p10022
 
 IMG_PATH="$HOME/Qemu/"
@@ -25,8 +25,8 @@ for (( i=1; i<=$args; i++ )); do
 done
 
 [ ! -z "$CD_PATH" ] && options+=(-cdrom $CD_PATH -boot menu=on)
-[ ! -z "$SHARED_DIR_PATH" ] && options+=(-fsdev local,security_model=passthrough,id=fsdev0,p)
-[ ! -z "$SHARED_DIR_PATH" ] && options+=(-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag)
+[ ! -z "$SHARED_DIR_PATH" ] && options+=(-fsdev local,security_model=passthrough,id=fsdev0,path="$SHARED_DIR_PATH")
+[ ! -z "$SHARED_DIR_PATH" ] && options+=(-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare)
 [ "$NO_GRAPHIC" = true ] && options+=(-m 1G -nographic) || options+=(-m 2G -vga virtio -full-screen)
 
 qemu-system-x86_64 "${options[@]}"
