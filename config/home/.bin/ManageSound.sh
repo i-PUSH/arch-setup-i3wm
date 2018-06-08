@@ -39,12 +39,12 @@ function muteVol(){
 }
 
 function pa-list() {
-	pacmd list-sinks | awk '/index/ || /name:/' ;
+	pacmd list-sinks | awk '/index/ || /name:/';
 }
 
 function pa-set() { 
 	# list all apps in playback tab (ex: cmus, mplayer, vlc)
-	inputs=($(pacmd list-sink-inputs | awk '/index/ {print $2}')) 
+	inputs=($(pacmd list-sink-inputs | awk '/index/ {print $2}'))
 	# set the default output device
 	pacmd set-default-sink $1 &> /dev/null
 	# apply the changes to all running apps to use the new output device
@@ -71,12 +71,8 @@ function pa-playbackset() {
 }
 
 function pa-switch-sink(){
-	sink=$(pacmd list-sinks | awk '/index/ {print $2; exit}')
-	if [ "$sink" == "0" ]; then
-		pa-set 0
-	else
-		pa-set 1
-	fi
+	sink=$(pacmd list-sink-inputs | awk '/sink: / {print $2; exit}')
+	[[ "$sink" == "0" ]] && pa-set 1 || pa-set 0
 }
 
 function manageSound(){
