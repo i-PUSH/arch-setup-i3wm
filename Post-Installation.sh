@@ -71,7 +71,7 @@ pacman -S --noconfirm gnome-system-monitor
 pacman -S --noconfirm lxrandr
 pacman -S --noconfirm firefox
 pacman -S --noconfirm gnome-calculator
-pacman -S --noconfirm libreoffice-fresh hunspell-de
+pacman -S --noconfirm libreoffice-fresh-de hunspell-de
 pacman -S --noconfirm evince
 pacman -S --noconfirm smplayer
 pacman -S --noconfirm jdk8-openjdk gradle intellij-idea-community-edition
