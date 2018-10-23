@@ -232,7 +232,7 @@ bindsym --release Shift+Print exec scrot -s ~/%Y-%m-%d-%T-screenshot.png
 # exec --no-startup-id xrandr --output $MONITOR1 --auto --output $MONITOR2 --primary --preferred --right-of $MONITOR1
 exec --no-startup-id xrandr --output $MONITOR1 --off --output $MONITOR2 --auto --primary --preferred
 exec_always --no-startup-id setxkbmap -model pc105 -layout de -variant nodeadkeys -option altwin:swap_lalt_lwin
-exec_always --no-startup-id "xrdb -merge -I$HOME ~/.Xresources && ~/.bin/Dropdown-run.sh"
+exec_always --no-startup-id ~/.bin/Dropdown-run.sh
 exec_always --no-startup-id ~/.fehbg
 exec --no-startup-id nm-applet
 exec --no-startup-id dunst

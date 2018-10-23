@@ -15,15 +15,29 @@ function toggleDPMS() {
     fi
 }
 
+function toggleNetwork() {
+	state="$(nmcli networking connectivity check)"
+	if [[ "$state" == "full" ]]; then
+		echo "Network: on"
+	else
+    	echo "Network: off"
+    fi
+}
+
 DPMS="$(toggleDPMS)"
-INPUT=`echo -e "Shutdown\nReboot\nSuspend\nScreen off\n$DPMS\nSwitch audio" | dmenu -i -nb '#C31616' -sb '#404040' -nf white`
+NETWORK="$(toggleNetwork)"
+INPUT=`echo -e "Lock\nShutdown\nReboot\nSuspend\nScreen off\n$DPMS\n$NETWORK\nSwitch audio\nMute" | dmenu -i -nb '#C31616' -sb '#404040' -nf white`
 
 case "$INPUT" in
+	"Lock")  lock;;
 	"Shutdown")  sudo shutdown -P now;;
 	"Reboot")  sudo shutdown -r now;;
 	"Suspend")  lock && systemctl suspend;;
 	"Screen off")  lock && xset dpms force off;;
 	"DPMS: on")  xset -dpms s off;;
 	"DPMS: off")  xset +dpms s on;;
-	"Switch audio" )  $HOME/.bin/ManageSound.sh "sw";;
+	"Network: on")  nmcli networking off;;
+	"Network: off")  nmcli networking on;;
+	"Mute")  $HOME/.bin/ManageSound.sh "mute";;
+	"Switch audio")  $HOME/.bin/ManageSound.sh "sw";;
 esac

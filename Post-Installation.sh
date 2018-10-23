@@ -113,6 +113,7 @@ cp -R /i-PUSH-arch-setup-i3wm/config/xorg/. /etc/X11/xorg.conf.d/
 
 # Copy all home folder files
 cp -R /i-PUSH-arch-setup-i3wm/config/home/. /home/$userName/
+cp -R /i-PUSH-arch-setup-i3wm/config/home/. /root/
 
 # Compile the rsync extension
 g++ /home/$userName/.bin/Rsync.cpp -o /home/$userName/.bin/Rsync
