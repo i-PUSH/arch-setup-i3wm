@@ -25,6 +25,7 @@ pacman -S --noconfirm gnome-keyring libsecret seahorse
 # Install command line and ncurses programs
 pacman -S --noconfirm sudo
 pacman -S --noconfirm bash-completion
+pacman -S --noconfirm smbclient
 pacman -S --noconfirm tree
 pacman -S --noconfirm atool
 pacman -S --noconfirm ranger w3m
@@ -92,6 +93,10 @@ pacman -S --noconfirm qemu
 
 # Add user to VirtualBox group
 # gpasswd -a $userName vboxusers
+
+# Samba config
+mkdir /etc/samba
+touch /etc/samba/smb.conf
 
 # Avahi provides local hostname resolution using a "hostname.local" naming scheme
 sed -i '/hosts:/s/mymachines/mymachines mdns_minimal [NOTFOUND=return]/' /etc/nsswitch.conf

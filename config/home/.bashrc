@@ -54,15 +54,15 @@ alias cp='cp -i'
 alias df='df -h'
 alias grepi='grep -i'
 alias diff='diff --color=auto'
-alias vim='vim -u NONE'
 alias trash='gio trash'
 alias ssh='TERM=xterm ssh'
 alias fehbg='feh --bg-fill "$(xsel -b)"'
 alias lss='systemctl list-units -t service'
 alias USB1='echo /run/media/$USER/$(ls /run/media/$USER/)/'
 alias rsyncHome='Rsync $HOME/ "$(USB1)" "/.*" /Qemu/ /Desktop/Synology/ /Windows/ --.git/'
-alias xone='xrandr --output $MONITOR1 --scale 1x1 --off --output $MONITOR2 --auto --scale 1x1'
-alias xdual='xrandr --output $MONITOR1 --auto --scale 1x1 --output $MONITOR2 --auto --scale 1x1  --primary --preferred --right-of $MONITOR1'
+alias x1='xrandr --output $MONITOR1 --scale 1x1 --auto --output $MONITOR2 --scale 1x1 --off'
+alias x2='xrandr --output $MONITOR2 --scale 1x1 --auto --output $MONITOR1 --scale 1x1 --off'
+alias xdual='xrandr --output $MONITOR1 --scale 1x1 --auto --output $MONITOR2 --scale 1x1 --auto --primary --preferred --right-of $MONITOR1'
 
 # Functions
 cdd() { cd "$1" && ls -all; }
@@ -146,4 +146,10 @@ wgex () {
     wget $1 -P $2
     extract "$2$(basename "$1")" $2
     trash "$2$(basename "$1")"
+}
+
+gita() { 
+    git add -A
+    git commit -m "$1"
+    git push
 }
